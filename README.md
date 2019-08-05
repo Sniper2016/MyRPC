@@ -37,32 +37,32 @@ Rpc接口使用pb序列化，可以支持向后兼容
 参考[博客](https://www.gameboys.cn/article/32)
 # 四、测试用例
 ## 1.测试zk集群的高可用
-a.服务器上面部署一个3个节点的zk服务，端口分别为192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181
-b.启动Type1Server1.java Type1Server2.java Type2Server1.java Type2Server2.java
-c.启动SyncClientTest.java
-d.分别关掉zk1，zk2，开启zk1，开启zk2
-e.观察服务是否ok
-结论：基于zk的完美高可用--》zk挂掉了2/3的服务节点的时候服务器会报错，但是已注册的服务还是ok的，挂掉的服务不超过2/3服务器是没有影响的
+1. 服务器上面部署一个3个节点的zk服务，端口分别为192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181
+2. 启动Type1Server1.java Type1Server2.java Type2Server1.java Type2Server2.java
+3. 启动SyncClientTest.java
+4. 分别关掉zk1，zk2，开启zk1，开启zk2
+5. 观察服务是否ok
+6. 结论：基于zk的完美高可用--》zk挂掉了2/3的服务节点的时候服务器会报错，但是已注册的服务还是ok的，挂掉的服务不超过2/3服务器是没有影响的
 ## 2.测试服务切换
-a.服务器上面部署一个3个节点的zk服务，端口分别为192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181，也可以使用ZkMain.java启动内嵌zk服务(注：内嵌zk服不能用来测试高可用，因为他重启是没有保存数据的)
-b.启动Type1Server1.java Type2Server1.java 
-c.启动SyncClientTest.java
-d.启动Type1Server2.java Type2Server2.java，关掉Type1Server1.java Type2Server1.java 
-e.观察服务是否ok
-结论：当某个服务挂掉了，已发送的请求会失败，剩余的请求会被路由到其他可用服务，未做dubbo的集群容错机制，后期可以考虑，但已经实现服务挂掉自动感知和自动去除无效节点
+1. 服务器上面部署一个3个节点的zk服务，端口分别为192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181，也可以使用ZkMain.java启动内嵌zk服务(注：内嵌zk服不能用来测试高可用，因为他重启是没有保存数据的)
+2. 启动Type1Server1.java Type2Server1.java 
+3. 启动SyncClientTest.java
+4. 启动Type1Server2.java Type2Server2.java，关掉Type1Server1.java Type2Server1.java 
+5. 观察服务是否ok
+6. 结论：当某个服务挂掉了，已发送的请求会失败，剩余的请求会被路由到其他可用服务，未做dubbo的集群容错机制，后期可以考虑，但已经实现服务挂掉自动感知和自动去除无效节点
 ## 3.测试同步、异步请求
-a.同步请求 启动Type1Server1.java Type2Server1.java 启动SyncClientTest.java
-b.异步请求 启动Type1Server1.java Type2Server1.java 启动ASyncClientTest.java
-结论：同步异步无异常
+1. 同步请求 启动Type1Server1.java Type2Server1.java 启动SyncClientTest.java
+2. 异步请求 启动Type1Server1.java Type2Server1.java 启动ASyncClientTest.java
+3. 结论：同步异步无异常
 ## 4.测试编解码性能,编解码向后兼容
-ProtostuffTest.java
-结论：
-a.100000次序列化，使用了700ms，0.007ms每次序列化，速度飞起
-b.完美向后兼容，bean新增字段测试ok
-c.map，list等特殊bean编解码测试ok
+1. 启动ProtostuffTest.java
+ 结论：
+1. 100000次序列化，使用了700ms，0.007ms每次序列化，速度飞起
+2. 完美向后兼容，bean新增字段测试ok
+3. map，list等特殊bean编解码测试ok
 ## 5.测试多个服务和客户端同时启动，看是否能正常正确提供服务
-a.启动SyncClientTest.java 启动ASyncClientTest.java
-b.过30s之后 启动Type1Server1.java Type2Server1.java 
-结论：rpcClient在服务未初始化完毕的时候会阻塞10s，直到rpcServer链接成功，解决dubbo启动依赖检查
+1. 启动SyncClientTest.java 启动ASyncClientTest.java
+2. 过30s之后 启动Type1Server1.java Type2Server1.java 
+3. 结论：rpcClient在服务未初始化完毕的时候会阻塞10s，直到rpcServer链接成功，解决dubbo启动依赖检查
 ## 6.测试rpcClient同时连接多类型服务
 结论：操作在用例1已经使用到了，多类型服务无问题
