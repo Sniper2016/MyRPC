@@ -156,7 +156,6 @@ public class RpcServer {
 				} catch (RpcExpection expection) {	
 					response.setError(expection.toString());
 					response.setResult(expection);
-					
 					// logger.error("RPC Server handle request error", t);
 				}
 				ctx.writeAndFlush(response).addListener(new ChannelFutureListener() {

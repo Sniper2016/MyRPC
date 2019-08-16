@@ -9,7 +9,7 @@ public class Type2Server1 {
 		RpcServerConfig cfg = new RpcServerConfig();
 		cfg.setBasePackage("cn.gameboys.rpc.test.server.type2");
 		cfg.setRegistryAddress("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
-		//cfg.setRegistryAddress("127.0.0.1:2181");
+		// cfg.setRegistryAddress("127.0.0.1:2181");
 		cfg.setServerID(1);
 		cfg.setType(2);
 		RpcServer rpcServer = new RpcServer(cfg);

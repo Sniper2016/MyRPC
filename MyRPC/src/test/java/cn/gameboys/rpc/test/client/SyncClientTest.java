@@ -15,22 +15,15 @@ public class SyncClientTest {
 	private static final Logger logger = LoggerFactory.getLogger(SyncClientTest.class);
 
 	public static void main(String[] args) throws Exception {
-
 		//
 		// ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
-
-		//
 		ServiceDiscovery serviceDiscovery = new ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
-
-		final RpcClient rpcClient = new RpcClient(serviceDiscovery, "com.nettyrpc.test.client");
-
+		final RpcClient rpcClient = new RpcClient(serviceDiscovery, "cn.gameboys.rpc.test.client");
 		int thread1Num = 1;
 		int thread2Num = 1;
 		int requestNum = 1000;
 		Thread[] threads1 = new Thread[thread1Num];
 		Thread[] threads2 = new Thread[thread2Num];
-
-		long startTime = System.currentTimeMillis();
 		for (int i = 0; i < thread1Num; ++i) {
 			threads1[i] = new Thread(new Runnable() {
 				@Override
@@ -56,7 +49,6 @@ public class SyncClientTest {
 			});
 			threads1[i].start();
 		}
-
 		for (int i = 0; i < thread2Num; ++i) {
 			threads2[i] = new Thread(new Runnable() {
 				@Override
@@ -82,14 +74,6 @@ public class SyncClientTest {
 			});
 			threads2[i].start();
 		}
-
-//		for (int i = 0; i < threads.length; i++) {
-//			threads[i].join();
-//		}
-
-		long endTime = System.currentTimeMillis();
-		//System.out.println(endTime - startTime);
-
 		while (true) {
 
 		}
