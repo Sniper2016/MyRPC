@@ -1,8 +1,8 @@
 ![MyRPC](https://gameboys.oss-cn-shenzhen.aliyuncs.com/blog/u%3D1948842540%2C2360308759%26fm%3D26%26gp%3D0.jpg)
 # 一、背景
-dubbo在开源rpc界是无敌的存在，稳定，用户多，但是在某些领域，例如javase，非web场景，或者不使用spring的场景，就急需一个轻量级别的rpc框架，于是MyRPC就这样被背景下诞生了
+dubbo在开源rpc界是无敌的存在，稳定，用户多，但是在某些领域，例如javase，非web场景，或者不使用spring的场景，就急需一个轻量级别的rpc框架，于是MyRPC就这样被背景下诞生了,
 # 二、简介
-MyRPC是一个可用于生产环境的轻量级，高可用，高性能，高易用分布式远程调用框架，参考dubbo的设计，是一个五脏俱全的简易版dubbo。
+MyRPC是一个可用于生产环境的轻量级，高可用，高性能，高易用分布式远程调用框架，参考dubbo的设计，是一个五脏俱全的简易版dubbo,支持同步调用，异步调用，服务自动注册，定时调度系统等。
 ## 1.架构
 ![架构图](https://gameboys.oss-cn-shenzhen.aliyuncs.com/oneblog/20190805215811114.png)
 ## 2.特性：
@@ -22,6 +22,7 @@ Rpc接口使用 Protostuff  序列化框架，可以支持向后兼容
 3. 使用高可用的注册中心Zookeeper
 4. 使用注解自动注入RPC服务
 5. 使用注解实现异步回调，方便易用
+6. 封装了Quartz，通过注解方便使用定时器
 # 三、使用
 [参考博客](https://www.gameboys.cn/article/32)
 # 四、测试用例
