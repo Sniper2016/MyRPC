@@ -11,6 +11,12 @@ import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
+/**
+ * Description:
+ * 
+ * @author sniper(www.gameboys.cn 1084038709)
+ * @date 2019年8月16日
+ */
 public class ScheduleUtils {
 	public final static String JOB_PARAM_KEY = "jobParamKey";
 

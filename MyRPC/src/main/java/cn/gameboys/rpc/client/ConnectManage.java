@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import cn.gameboys.rpc.expection.RpcErrorEnum;
 import cn.gameboys.rpc.expection.RpcExpection;
 import cn.gameboys.rpc.registry.ServerConnectInfo;
-import cn.gameboys.rpc.util.NamedThreadFactory;
+import cn.gameboys.util.NamedThreadFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;

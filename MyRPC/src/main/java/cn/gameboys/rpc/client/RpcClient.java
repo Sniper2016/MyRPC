@@ -16,13 +16,15 @@ import cn.gameboys.rpc.client.async.MethodObjectInfo;
 import cn.gameboys.rpc.expection.RpcErrorEnum;
 import cn.gameboys.rpc.expection.RpcExpection;
 import cn.gameboys.rpc.registry.ServiceDiscovery;
-import cn.gameboys.rpc.util.ClassUtils;
+import cn.gameboys.rpc.status.StatusManager;
+import cn.gameboys.util.ClassUtils;
 
 /**
  * 
-* Description: 
-* @author sniper(www.gameboys.cn 1084038709) 
-* @date 2019年8月5日
+ * Description:
+ * 
+ * @author sniper(www.gameboys.cn 1084038709)
+ * @date 2019年8月5日
  */
 public class RpcClient {
 	private static final Logger logger = LoggerFactory.getLogger(ConnectManage.class);
@@ -40,6 +42,8 @@ public class RpcClient {
 		this.serviceDiscovery = serviceDiscovery;
 		// 初始化
 		this.autoRegistAsyncRpcInfo(basePackage);
+		// 初始化请求统计
+		StatusManager.getInstance().init();
 	}
 
 	/**

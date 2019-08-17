@@ -1,4 +1,4 @@
-package cn.gameboys.rpc.util;
+package cn.gameboys.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

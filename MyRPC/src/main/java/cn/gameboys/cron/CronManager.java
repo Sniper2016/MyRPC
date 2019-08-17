@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.gameboys.rpc.util.ClassUtils;
+import cn.gameboys.util.ClassUtils;
 
 /**
  * Description:定时任务管理器，单机版本
@@ -34,6 +34,7 @@ public class CronManager {
 	public void init(String basePackage) {
 		try {
 			this.autoRegistCronTask(basePackage);
+			System.out.println("初始化状态服务成功。");
 		} catch (InstantiationException | IllegalAccessException | SchedulerException e) {
 			e.printStackTrace();
 		}

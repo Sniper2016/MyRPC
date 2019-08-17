@@ -1,4 +1,4 @@
-package cn.gameboys.rpc.test.client;
+package cn.gameboys.rpc.test.status;
 
 import java.util.List;
 
@@ -16,12 +16,11 @@ public class SyncClientTest {
 
 	public static void main(String[] args) throws Exception {
 		//
-		ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
-		// ServiceDiscovery serviceDiscovery = new
-		// ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
+		 ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
+		 //ServiceDiscovery serviceDiscovery = new ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
 		final RpcClient rpcClient = new RpcClient(serviceDiscovery, "cn.gameboys.rpc.test.client");
-		int thread1Num = 1;
-		int thread2Num = 1;
+		int thread1Num = 2;
+		int thread2Num = 2;
 		int requestNum = 1000000000;
 		Thread[] threads1 = new Thread[thread1Num];
 		Thread[] threads2 = new Thread[thread2Num];
@@ -39,12 +38,12 @@ public class SyncClientTest {
 						} catch (Exception e) {
 							System.out.println(Thread.currentThread().getName() + " " + e);
 						}
-						System.out.println("@@@@@@@@type1---" + Thread.currentThread().getName() + " " + list);
-						try {
-							Thread.currentThread().sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+					//	System.out.println("@@@@@@@@type1---" + Thread.currentThread().getName() + " " + list);
+//						try {
+//							Thread.currentThread().sleep(1000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -64,12 +63,12 @@ public class SyncClientTest {
 						} catch (Exception e) {
 							System.out.println(Thread.currentThread().getName() + " " + e);
 						}
-						System.out.println("@@@@@@@@type2---" + Thread.currentThread().getName() + " " + list);
-						try {
-							Thread.currentThread().sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+					//	System.out.println("@@@@@@@@type2---" + Thread.currentThread().getName() + " " + list);
+//						try {
+//							Thread.currentThread().sleep(1000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});

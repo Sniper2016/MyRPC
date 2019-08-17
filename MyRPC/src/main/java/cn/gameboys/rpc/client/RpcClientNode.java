@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 import cn.gameboys.rpc.protocol.RpcRequest;
 import cn.gameboys.rpc.protocol.RpcResponse;
 import cn.gameboys.rpc.registry.ServerConnectInfo;
-import cn.gameboys.rpc.util.NamedThreadFactory;
+import cn.gameboys.rpc.status.StatusManager;
+import cn.gameboys.util.NamedThreadFactory;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -65,6 +66,8 @@ public class RpcClientNode implements InvocationHandler, RpcClientRspExcuteable 
 		if (!this.inited) {
 			return null;
 		}
+		long startTime = System.currentTimeMillis();
+
 		if (Object.class == method.getDeclaringClass()) {
 			String name = method.getName();
 			if ("equals".equals(name)) {
@@ -89,12 +92,14 @@ public class RpcClientNode implements InvocationHandler, RpcClientRspExcuteable 
 		if (isOneWay) {
 			// 单向请求
 			this.sendRequest(request);
+			long endTime = System.currentTimeMillis();
+			StatusManager.getInstance().addReqTimes(request.getClassName() + "." + request.getMethodName(), (int)(endTime - startTime));
 			return null;
 		} else if (asyncReq) {
 			// 异步请求
 			RPCFuture rpcFuture = new RPCFuture(request, this, true);
 			pendingRPC.put(request.getRequestId(), rpcFuture);
-			//因为多线程，为了防止还没有把reqID注册到pendingRPC里面，rpcServer就已经响应回来了找不到pendingRPC
+			// 因为多线程，为了防止还没有把reqID注册到pendingRPC里面，rpcServer就已经响应回来了找不到pendingRPC
 			this.sendRequest(request);
 			return null;
 		} else {
@@ -103,7 +108,10 @@ public class RpcClientNode implements InvocationHandler, RpcClientRspExcuteable 
 			pendingRPC.put(request.getRequestId(), rpcFuture);
 			this.sendRequest(request);
 			// 最多3s不响应的话直接返回
-			return rpcFuture.get(5000L, TimeUnit.MILLISECONDS);
+			Object obj = rpcFuture.get(5000L, TimeUnit.MILLISECONDS);
+			long endTime = System.currentTimeMillis();
+			StatusManager.getInstance().addReqTimes(request.getClassName() + "." + request.getMethodName(), (int)(endTime - startTime));
+			return obj;
 		}
 	}
 

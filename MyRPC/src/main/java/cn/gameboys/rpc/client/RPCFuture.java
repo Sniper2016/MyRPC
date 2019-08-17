@@ -17,6 +17,7 @@ import cn.gameboys.rpc.expection.RpcErrorEnum;
 import cn.gameboys.rpc.expection.RpcExpection;
 import cn.gameboys.rpc.protocol.RpcRequest;
 import cn.gameboys.rpc.protocol.RpcResponse;
+import cn.gameboys.rpc.status.StatusManager;
 
 /**
  * 
@@ -102,6 +103,11 @@ public class RPCFuture implements Future<Object> {
 				@Override
 				public void run() {
 					List<MethodObjectInfo> list = RpcClient.getMethodObjectInfo(request.getMethodName());
+					
+					//记录耗时
+					long endTime = System.currentTimeMillis();
+					StatusManager.getInstance().addReqTimes(request.getClassName() + "." + request.getMethodName(), (int)(endTime - startTime));
+
 					if (list != null) {
 						try {
 							for (MethodObjectInfo moInfo : list) {

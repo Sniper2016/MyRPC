@@ -2,7 +2,7 @@ package cn.gameboys.rpc.test.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import cn.gameboys.rpc.util.NetWorkUtil;
+import cn.gameboys.util.NetWorkUtil;
 
 /**
  * Description:

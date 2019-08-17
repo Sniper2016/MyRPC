@@ -16,12 +16,12 @@ public class ASyncClientTest {
 	private static final Logger logger = LoggerFactory.getLogger(ASyncClientTest.class);
 
 	public static void main(String[] args) throws Exception {
-		// ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
-		ServiceDiscovery serviceDiscovery = new ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
+		 ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
+		//ServiceDiscovery serviceDiscovery = new ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
 		final RpcClient rpcClient = new RpcClient(serviceDiscovery, "cn.gameboys.rpc.test.client");
 		int thread1Num = 1;
 		int thread2Num = 1;
-		int requestNum = 1000;
+		int requestNum = 1000000000;
 		Thread[] threads1 = new Thread[thread1Num];
 		Thread[] threads2 = new Thread[thread2Num];
 		for (int i = 0; i < thread1Num; ++i) {
@@ -84,6 +84,7 @@ public class ASyncClientTest {
 
 	@AsyncRPCCallback(value = "getTestPerson")
 	public void haha(boolean isError, Object[] parameters, Object result) {
+		
 		logger.info("@@@@@@@@haha---" + Thread.currentThread().getName() + " " + result);
 	}
 }

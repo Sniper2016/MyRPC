@@ -1,4 +1,4 @@
-package cn.gameboys.rpc.test.client;
+package cn.gameboys.rpc.test.status;
 
 import java.util.List;
 
@@ -6,19 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.gameboys.rpc.client.RpcClient;
+import cn.gameboys.rpc.client.async.AsyncRPCCallback;
 import cn.gameboys.rpc.registry.ServiceDiscovery;
 import cn.gameboys.rpc.test.api.Person;
 import cn.gameboys.rpc.test.api.Type1Service;
 import cn.gameboys.rpc.test.api.Type2Service;
 
-public class SyncClientTest {
-	private static final Logger logger = LoggerFactory.getLogger(SyncClientTest.class);
+public class ASyncClientTest {
+	private static final Logger logger = LoggerFactory.getLogger(ASyncClientTest.class);
 
 	public static void main(String[] args) throws Exception {
-		//
-		ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
-		// ServiceDiscovery serviceDiscovery = new
-		// ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
+		 ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
+		//ServiceDiscovery serviceDiscovery = new ServiceDiscovery("192.168.1.107:2181,192.168.1.107:3181,192.168.1.107:4181");
 		final RpcClient rpcClient = new RpcClient(serviceDiscovery, "cn.gameboys.rpc.test.client");
 		int thread1Num = 1;
 		int thread2Num = 1;
@@ -35,16 +34,16 @@ public class SyncClientTest {
 						try {
 							Type1Service client = rpcClient.create(1, 0, Type1Service.class);
 							list = client.getTestPerson("sniper", 20);
-							client.mapTest(list);
+							Type1Service asyncClient = rpcClient.createAsync(1, 0, Type1Service.class);
+							asyncClient.mapTest(list);
 						} catch (Exception e) {
 							System.out.println(Thread.currentThread().getName() + " " + e);
 						}
-						System.out.println("@@@@@@@@type1---" + Thread.currentThread().getName() + " " + list);
-						try {
-							Thread.currentThread().sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+//						try {
+//							Thread.currentThread().sleep(1000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
@@ -58,27 +57,35 @@ public class SyncClientTest {
 					for (int i = 0; i < requestNum; i++) {
 						List<Person> list = null;
 						try {
-							Type2Service client = rpcClient.create(2, 0, Type2Service.class);
-							list = client.getTestPerson("sniper", 20);
-							client.mapTest(list);
+							Type2Service asyncClient = rpcClient.createAsync(2, 0, Type2Service.class);
+							asyncClient.getTestPerson("sniper", 20);
 						} catch (Exception e) {
 							System.out.println(Thread.currentThread().getName() + " " + e);
 						}
-						System.out.println("@@@@@@@@type2---" + Thread.currentThread().getName() + " " + list);
-						try {
-							Thread.currentThread().sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+//						try {
+//							Thread.currentThread().sleep(1000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});
 			threads2[i].start();
 		}
 		while (true) {
-
 		}
 		// rpcClient.stop();
 	}
 
+	@AsyncRPCCallback(value = "mapTest")
+	public void hehe(boolean isError, Object[] parameters, Object result) {
+		
+		//logger.info("@@@@@@@@hehe---" + Thread.currentThread().getName() + " " + result);
+	}
+
+	@AsyncRPCCallback(value = "getTestPerson")
+	public void haha(boolean isError, Object[] parameters, Object result) {
+		
+		//logger.info("@@@@@@@@haha---" + Thread.currentThread().getName() + " " + result);
+	}
 }

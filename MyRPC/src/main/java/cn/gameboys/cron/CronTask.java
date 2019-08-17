@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CronTask {
+	//教程
+	//https://www.w3cschool.cn/quartz_doc/quartz_doc-s23d2cy8.html
 	String cronExpression();
 	
 }

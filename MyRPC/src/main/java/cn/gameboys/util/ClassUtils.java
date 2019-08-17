@@ -1,4 +1,4 @@
-package cn.gameboys.rpc.util;
+package cn.gameboys.util;
 /** 
 * Description: 
 * @author sniper(www.gameboys.cn 1084038709) 
